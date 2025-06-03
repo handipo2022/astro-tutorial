@@ -1,6 +1,9 @@
 ---
-import '../styles/global.css';
-const pageTitle="Homepage";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import "../styles/global.css";
+const pageTitle = "Homepage";
 ---
 
 <html lang="en">
@@ -12,10 +15,7 @@ const pageTitle="Homepage";
     <title>{pageTitle}</title>
   </head>
   <body>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/blog">Blog</a>
-    
+    <Header />
     <h1>{pageTitle}</h1>
     <h2>Astro Site by ZHB</h2>
     <p>Hallo this is my astro website , tutorial for astro Test today</p>
@@ -27,5 +27,9 @@ const pageTitle="Homepage";
       doloremque quidem nostrum architecto, cumque ut atque minima assumenda
       mollitia vel eos sequi, odio cupiditate ipsa itaque alias!
     </p>
+    <Footer />
+    <script>
+     import "../scripts/menu.js";
+    </script>
   </body>
 </html>
