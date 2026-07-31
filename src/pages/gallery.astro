@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const pageTitle = "Project Gallery";
+---
+
+<Layout title={pageTitle}>
+  <div class="d-flex flex-column align-items-center mt-5">
+    <ul class="list-unstyled align-items-center">
+      <li class="list-group-item">
+        <a class="text-decoration-none" href="/gallery/post-1">Gallery Item 1</a
+        >
+      </li>
+      <li class="list-group-item">
+        <a class="text-decoration-none" href="/gallery/post-2">Gallery Item 2</a
+        >
+      </li>
+      <li class="list-group-item">
+        <a class="text-decoration-none" href="/gallery/post-3">Gallery Item 3</a
+        >
+      </li>
+    </ul>
+  </div>
+</Layout>
