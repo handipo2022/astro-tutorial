@@ -1,24 +1,243 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const pageTitle = "Project Gallery";
+const pageTitle = "Projects";
+
+const mobileProjects = [
+  {
+    id: "mobile-project-1",
+    title: "Mobile Project #1",
+    image: "/images/fotoproject/pic5.jpg",
+    alt: "mobile project #1 preview",
+  },
+  {
+    id: "mobile-project-2",
+    title: "Mobile Project #2",
+    image: "/images/fotoproject/pic6.jpg",
+    alt: "mobile project #2 preview",
+  },
+];
+
+const webProjects = [
+  {
+    id: "web-project-1",
+    title: "Web Project #1",
+    image: "/images/fotoproject/pic7.jpg",
+    alt: "web project #1 preview",
+  },
+  {
+    id: "web-project-2",
+    title: "Web Project #2",
+    image: "/images/fotoproject/pic8.jpg",
+    alt: "web project #2 preview",
+  },
+];
+
+const embeddedProjects = [
+  {
+    id: "embedded-system1",
+    title: "IoT Project #1",
+    image: "/images/fotoproject/pic9.jpg",
+    alt: "embedded hardware panel preview #1",
+  },
+  {
+    id: "embedded-system2",
+    title: "IoT Project #2",
+    image: "/images/fotoproject/pic10.jpg",
+    alt: "embedded hardware panel preview #2",
+  },
+];
+
+const sections = [
+  { id: "mobileAppCarousel", title: "Mobile Dev", data: mobileProjects },
+  { id: "webAppCarousel", title: "Web Dev", data: webProjects },
+  {
+    id: "embeddedAppCarousel",
+    title: "Embedded Systems",
+    data: embeddedProjects,
+  },
+];
 ---
 
 <Layout title={pageTitle}>
-  <div class="d-flex flex-column align-items-center mt-5">
-    <ul class="list-unstyled align-items-center">
-      <li class="list-group-item">
-        <a class="text-decoration-none" href="/gallery/post-1">Gallery Item 1</a
-        >
-      </li>
-      <li class="list-group-item">
-        <a class="text-decoration-none" href="/gallery/post-2">Gallery Item 2</a
-        >
-      </li>
-      <li class="list-group-item">
-        <a class="text-decoration-none" href="/gallery/post-3">Gallery Item 3</a
-        >
-      </li>
-    </ul>
+  <div
+    class="w-100 container-fluid p-0 project-view-wrapper animate-fade-in-up"
+  >
+    <div class="text-center mb-3 section-header-block">
+      <h2
+        class="fw-bold text-dark font-monospace text-uppercase tracking-wider h5 m-0"
+      >
+        My Projects
+      </h2>
+      <div class="header-divider mx-auto mt-2"></div>
+    </div>
+
+    <div
+      class="row g-3 g-xl-4 justify-content-center align-items-stretch project-row"
+    >
+      {
+        sections.map((section) => (
+          <div class="col-12 col-md-4 d-flex flex-column project-column">
+            <div class="project-category-lbl mb-2 font-monospace fw-semibold text-center text-md-start">
+              <i class="bi bi-folder2-open me-2 text-primary" />
+              {section.title}
+            </div>
+
+            <div
+              id={section.id}
+              class="carousel slide carousel-fade rounded-4 overflow-hidden shadow-sm border border-light-subtle w-100 flex-grow-1 d-flex flex-column project-card-body"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner flex-grow-1 bg-dark">
+                {section.data.map((project, index) => (
+                  <div
+                    class={`carousel-item h-100 ${index === 0 ? "active" : ""}`}
+                  >
+                    <img
+                      src={project.image}
+                      class="d-block w-100 object-fit-cover project-img-frame"
+                      alt={project.alt}
+                    />
+                    <div class="bg-white p-3 text-center d-flex flex-column align-items-center justify-content-center card-text-panel">
+                      <h3 class="text-dark fw-bold mb-2 project-title-text text-truncate w-100">
+                        {project.title}
+                      </h3>
+                      <a
+                        href={`/projects/${project.id}`}
+                        class="btn btn-primary btn-sm px-4 py-2 rounded-pill fw-semibold action-btn"
+                      >
+                        See Details
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {section.data.length > 1 && (
+                <>
+                  <button
+                    class="carousel-control-prev opacity-75 hover-opacity-100 transition-all custom-control-btn"
+                    type="button"
+                    data-bs-target={`#${section.id}`}
+                    data-bs-slide="prev"
+                  >
+                    <i class="bi bi-arrow-left-circle-fill text-white fs-2 drop-shadow-sm" />
+                  </button>
+                  <button
+                    class="carousel-control-next opacity-75 hover-opacity-100 transition-all custom-control-btn"
+                    type="button"
+                    data-bs-target={`#${section.id}`}
+                    data-bs-slide="next"
+                  >
+                    <i class="bi bi-arrow-right-circle-fill text-white fs-2 drop-shadow-sm" />
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </Layout>
+
+<style>
+  .project-view-wrapper {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .header-divider {
+    width: 35px;
+    height: 3px;
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    border-radius: 2px;
+  }
+
+  .project-category-lbl {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Compact dimensions balanced for 1280px standard screens */
+  .project-img-frame {
+    height: 165px;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card-body:hover .project-img-frame {
+    transform: scale(1.02);
+  }
+
+  .project-title-text {
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+  }
+
+  .card-text-panel {
+    border-top: 1px solid #f1f5f9;
+    padding: 0.85rem !important;
+  }
+
+  .custom-control-btn {
+    height: calc(100% - 90px);
+  }
+
+  .hover-opacity-100:hover {
+    opacity: 1 !important;
+  }
+  .transition-all {
+    transition: all 0.2s ease-in-out;
+  }
+  .drop-shadow-sm {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  }
+
+  .action-btn {
+    transition: all 0.2s ease;
+    font-size: 0.75rem;
+  }
+  .action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.15);
+  }
+
+  /* Scaled layouts for screens larger than 1440px */
+  @media (min-width: 1441px) {
+    .project-img-frame {
+      height: 230px;
+    }
+    .project-title-text {
+      font-size: 1.1rem;
+    }
+    .card-text-panel {
+      padding: 1.25rem !important;
+    }
+  }
+
+  /* Mobile/Tablet alignment adjustments */
+  @media (max-width: 767px) {
+    .project-column {
+      margin-bottom: 1rem;
+    }
+    .project-img-frame {
+      height: 180px;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

@@ -1,15 +1,125 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Footer from "../components/Footer.astro";
+
 const pageTitle = "Contact Me";
+
+// Centralized social and contact data array for easy maintenance
+const contactLinks = [
+  {
+    name: "Email",
+    value: "handipo2022@gmail.com",
+    href: "mailto:handipo2022@gmail.com",
+    icon: "bi-envelope-fill",
+    colorClass: "text-danger",
+    btnClass: "btn-outline-danger",
+  },
+  {
+    name: "WhatsApp",
+    value: "+62 812-1779-9805",
+    href: "https://wa.me",
+    icon: "bi-whatsapp",
+    colorClass: "text-success",
+    btnClass: "btn-outline-success",
+  },
+  {
+    name: "Instagram",
+    value: "@zhouhanbao",
+    href: "https://instagram.com",
+    icon: "bi-instagram",
+    colorClass: "text-instagram",
+    btnClass: "btn-outline-instagram",
+  },
+  {
+    name: "Facebook",
+    value: "Zhou Han Bao",
+    href: "https://facebook.com",
+    icon: "bi-facebook",
+    colorClass: "text-primary",
+    btnClass: "btn-outline-primary",
+  },
+];
 ---
 
 <Layout title={pageTitle}>
-  <div class="d-flex flex-column">
-    <p class="text-primary fw-bold">
-      Please feel free to reach out to me for any inquiries, collaborations, or
-      just to say hello! You can contact me through the following channels:
-    </p>
-    <Footer />
+  <div class="container-fluid py-5">
+    <div class="max-w-2xl mx-auto text-center mb-5">
+      <h1 class="fw-bold text-dark mb-3">Get In Touch</h1>
+      <p class="text-secondary lh-base">
+        Have a project in mind, a question, or just want to say hi? Feel free to
+        reach out through any of the platforms below. I am always open to
+        discussing new opportunities and tech solutions!
+      </p>
+    </div>
+
+    <!-- Contact Grid / Card Stack -->
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white rounded-4 shadow-lg p-4 p-md-5 border-0">
+        <div class="row g-4">
+          {
+            contactLinks.map((link) => (
+              <div class="col-12 col-sm-6">
+                <!-- Added .position-relative to anchor the stretched link -->
+                <div class="position-relative p-3 border rounded-3 h-100 d-flex flex-column justify-content-between transition-all hover-shadow bg-hover-light">
+                  <div class="d-flex align-items-center mb-3">
+                    <div class={`fs-2 ${link.colorClass} me-3 lh-1`}>
+                      <i class={`bi ${link.icon}`} />
+                    </div>
+                    <div class="z-1 position-relative">
+                      <h3 class="h6 text-dark fw-bold mb-0">{link.name}</h3>
+                      <small class="text-muted d-block text-truncate style-value">
+                        {link.value}
+                      </small>
+                    </div>
+                  </div>
+                  <!-- Added Bootstrap's .stretched-link utility -->
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={`btn ${link.btnClass} btn-sm w-100 rounded-pill fw-semibold stretched-link`}
+                  >
+                    Connect
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </Layout>
+
+<style>
+  /* Custom styles for matching specific platform branding and interactions */
+  .text-instagram {
+    color: #e1306c;
+  }
+  .btn-outline-instagram {
+    color: #e1306c;
+    border-color: #e1306c;
+  }
+  .btn-outline-instagram:hover {
+    color: #fff;
+    background-color: #e1306c;
+    border-color: #e1306c;
+  }
+  .transition-all {
+    transition: all 0.25s ease-in-out;
+  }
+  .hover-shadow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: transparent !important;
+  }
+  /* Optional: Background highlight when hovering anywhere on the card block */
+  .bg-hover-light:hover {
+    background-color: #f8f9fa;
+  }
+  .style-value {
+    max-width: 180px;
+  }
+  .max-w-2xl {
+    max-width: 42rem;
+  }
+</style>

@@ -5,21 +5,130 @@ const pageTitle = "Homepage";
 ---
 
 <Layout title={pageTitle}>
-  <div class="d-flex flex-column align-items-center">
-    <img
-      class="img-fluid rounded-circle object-fit-cover mb-3 mt-5 border border-dark border-1"
-      style="width: 200px; height: 200px;"
-      src="/public/images/profile_example.jpg"
-      alt="Profile Picture"
-    />
-    <p class="text-primary fw-bold font-monospace">
-      Web Developer , Mobile Developer , Embedded Programmer
-    </p>
-    <p class="font-sans-serif text-center">
-      Hi , I am Zhou Han Bao, a passionate web and mobile developer also
-      embedded programmer. I love creating innovative solutions and exploring
-      new technologies. Welcome to my personal website where you can find my
-      projects, blog posts, and more about my work in the tech world.
-    </p>
+  <div class="container-fluid py-5">
+    <!-- Main Profile Card with Drop Shadow Box Layout -->
+    <div
+      class="max-w-2xl mx-auto bg-white rounded-4 shadow-lg p-4 p-md-5 text-center border-0"
+    >
+      <!-- Profile Image Container for adding depth -->
+      <div class="mb-4 d-inline-block position-relative">
+        <img
+          class="img-fluid rounded-circle object-fit-cover shadow-profile"
+          style="width: 200px; height: 200px;"
+          src="/images/profile_example.jpg"
+          alt="Zhou Han Bao - Profile Picture"
+        />
+      </div>
+
+      <!-- Container Teks dengan Efek Mengetik Bergantian -->
+      <div class="typing-container mb-3">
+        <h1
+          id="typing-target"
+          class="h4 text-primary fw-bold font-monospace d-inline-block m-0 text-nowrap overflow-hidden border-end border-3 border-primary typing-text"
+        >
+          Web Developer
+        </h1>
+      </div>
+
+      <!-- Introduction Body Copy -->
+      <p class="text-secondary lh-base mb-0 mx-auto" style="max-width: 600px;">
+        Hi, I am Zhou Han Bao, a passionate web and mobile developer and
+        embedded programmer. I love creating innovative solutions and exploring
+        new technologies. Welcome to my personal website where you can find my
+        projects, blog posts, and more about my work in the tech world.
+      </p>
+    </div>
   </div>
 </Layout>
+
+<!-- Script JavaScript untuk memproses pergantian teks -->
+<script>
+  const titles = ["Web Developer", "Mobile Developer", "Embedded Programmer"];
+  let currentIndex = 0;
+  const targetEl = document.getElementById("typing-target");
+
+  function changeText() {
+    if (!targetEl) return;
+
+    // 1. Mulai proses menghapus teks (mengurangi lebar elemen ke 0)
+    targetEl.style.animation = "none";
+    // Trigger reflow agar animasi bisa di-reset
+    void targetEl.offsetWidth;
+
+    // Jalankan animasi menghapus (arah balik / reverse) selama 0.4 detik
+    targetEl.style.animation =
+      "typing 0.4s steps(20) reverse forwards, blink 0.75s step-end infinite";
+
+    // 2. Setelah teks selesai terhapus, ganti konten teksnya dan ketik ulang
+    setTimeout(() => {
+      currentIndex = (currentIndex + 1) % titles.length;
+      targetEl.textContent = titles[currentIndex];
+
+      // Hitung jumlah karakter teks baru untuk presisi ketikan
+      const charCount = titles[currentIndex].length;
+
+      targetEl.style.animation = "none";
+      void targetEl.offsetWidth;
+
+      // Jalankan animasi mengetik teks baru selama 0.6 detik
+      targetEl.style.animation = `typing 0.6s steps(${charCount}) forwards, blink 0.75s step-end infinite`;
+    }, 400); // 400ms sesuai durasi animasi menghapus teks
+  }
+
+  // Jalankan fungsi pergantian teks setiap 2.5 detik (2 detik tampil + durasi transisi)
+  setInterval(changeText, 2500);
+</script>
+
+<style>
+  /* Keeps the card maximum width consistent with the contact layout */
+  .max-w-2xl {
+    max-width: 42rem;
+  }
+
+  /* Custom premium shadow for the avatar image */
+  .shadow-profile {
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease;
+  }
+
+  /* Optional: Subtle pop-out effect when hovering over the profile image */
+  .shadow-profile:hover {
+    transform: scale(1.03);
+  }
+
+  /* Pengaturan dasar elemen teks mengetik */
+  .typing-container {
+    display: flex;
+    justify-content: center;
+    height: 1.8rem; /* Mengunci tinggi agar layout di bawahnya tidak bergeser turun-naik */
+  }
+
+  .typing-text {
+    width: 0;
+    /* Animasi pertama kali saat halaman dimuat */
+    animation:
+      typing 0.8s steps(13) forwards,
+      blink 0.75s step-end infinite;
+  }
+
+  /* Keyframes untuk efek mengetik (lebar bertambah/berkurang) */
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  /* Keyframes untuk kursor berkedip */
+  @keyframes blink {
+    from,
+    to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: var(--bs-primary);
+    }
+  }
+</style>

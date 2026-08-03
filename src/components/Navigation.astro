@@ -1,12 +1,66 @@
-<nav
-  class="nav flex-column p-3 vh-100 border rounded-2"
-  style="background-color: #343a40;"
->
-  <a href="/" class="nav-link text-white fw-bold active aria-current='page'"
-    >Home</a
-  >
-  <a href="/gallery" class="nav-link text-white fw-bold">Gallery</a>
-  <a href="/blog" class="nav-link text-white fw-bold">Blog</a>
+---
+interface Props {
+  currentPath: string;
+}
 
-  <a href="/contact" class="nav-link text-white fw-bold">Contact</a>
+const { currentPath } = Astro.props;
+
+const navItems = [
+  { href: "/", label: "Home", icon: "bi-house-door" },
+  { href: "/gallery", label: "Projects", icon: "bi-folder" },
+  { href: "/contact", label: "Contact", icon: "bi-envelope" },
+];
+---
+
+<nav
+  class="navbar navbar-expand-md navbar-dark bg-dark sticky-md-top vh-md-100 align-items-md-start p-4"
+>
+  <div class="container-fluid flex-md-column align-items-md-start p-0">
+    <!-- Mobile Menu Toggle Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#sidebarMenu"
+      aria-controls="sidebarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation Item Menu Wrapper -->
+    <div class="collapse navbar-collapse w-100 mt-3 mt-md-0" id="sidebarMenu">
+      <ul class="navbar-nav flex-column w-100">
+        {
+          navItems.map((item) => {
+            const isActive =
+              (currentPath || "") === item.href ||
+              (item.href !== "/" && currentPath?.startsWith(item.href));
+
+            return (
+              <li class="nav-item mb-1">
+                <a
+                  class={`nav-link d-flex align-items-center rounded px-3 py-2 ${isActive ? "active bg-primary text-white fw-bold shadow-sm" : "text-secondary"}`}
+                  href={item.href}
+                >
+                  <i class={`bi ${item.icon} me-3 fs-5`} />
+                  <span>{item.label}</span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
 </nav>
+
+<style>
+  /* Keeps sidebar layout stretching downwards on larger viewport setups */
+  @media (min-width: 768px) {
+    .vh-md-100 {
+      height: 100vh;
+    }
+  }
+</style>
